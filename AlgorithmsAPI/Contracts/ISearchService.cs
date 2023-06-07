@@ -5,5 +5,6 @@
         Task<int?> BinarySearch(int[] array, int item);
         Task<int?> LinearSearch(int[] array, int item);
         Task<int?> InterpolationSearch(int[] array, int item);
+        Task<int?> TernarySearch(int[] array, int item);
     }
 }

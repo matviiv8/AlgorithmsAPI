@@ -40,17 +40,17 @@ namespace AlgorithmsAPI.Services
                     if (array[j] <= pivot)
                     {
                         i++;
-                        int temp = array[i];
+                        int firstTemp = array[i];
                         array[i] = array[j];
-                        array[j] = temp;
+                        array[j] = firstTemp;
                     }
                     j++;
                 }
 
                 var pivotIndex = i + 1;
-                var temp2 = array[pivotIndex];
+                var secondTemp = array[pivotIndex];
                 array[pivotIndex] = array[right];
-                array[right] = temp2;
+                array[right] = secondTemp;
 
                 await QuickSort(array, left, pivotIndex - 1);
                 await QuickSort(array, pivotIndex + 1, right);

@@ -76,5 +76,42 @@ namespace AlgorithmsAPI.Services
 
             return null;
         }
+
+        public async Task<int?> TernarySearch(int[] array, int item)
+        {
+            var low = 0;
+            var high = array.Length - 1;
+
+            while (high >= low)
+            {
+                var firstMid = low + (high - low) / 3;
+                var secondMid = high - (high - low) / 3;
+
+                if (array[firstMid] == item)
+                {
+                    return firstMid;
+                }
+                if (array[secondMid] == item)
+                {
+                    return secondMid;
+                }
+
+                if(item < array[firstMid])
+                {
+                    high = firstMid - 1;
+                }
+                else if (item > array[secondMid])
+                {
+                    low = secondMid + 1;
+                }
+                else
+                {
+                    low = firstMid + 1;
+                    high = secondMid - 1;
+                }
+            }
+
+            return null;
+        }
     }
 }

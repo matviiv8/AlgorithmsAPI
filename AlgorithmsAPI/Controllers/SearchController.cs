@@ -37,7 +37,8 @@ namespace AlgorithmsAPI.Controllers
                 NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
                 ElapsedTime = elapsedTime,
                 SearchedVariable = item,
-                LastMatchingResult = result == null ? "Item is missing" : result.ToString()
+                LastMatchingResult = result == null ? "Item is missing" : result.ToString(),
+                SearchArray = await _conversionService.GetStringFromArrayNumbers(array)
             });
         }
 
@@ -56,7 +57,8 @@ namespace AlgorithmsAPI.Controllers
                 NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
                 ElapsedTime = elapsedTime,
                 SearchedVariable = item,
-                LastMatchingResult = result == null ? "Item is missing" : result.ToString()
+                LastMatchingResult = result == null ? "Item is missing" : result.ToString(),
+                SearchArray = await _conversionService.GetStringFromArrayNumbers(array)
             });
         }
 
@@ -76,7 +78,30 @@ namespace AlgorithmsAPI.Controllers
                 NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
                 ElapsedTime = elapsedTime,
                 SearchedVariable = item,
-                LastMatchingResult = result == null ? "Item is missing" : result.ToString()
+                LastMatchingResult = result == null ? "Item is missing" : result.ToString(),
+                SearchArray = await _conversionService.GetStringFromArrayNumbers(array)
+            });
+        }
+
+
+        [HttpPost("ternary", Name = nameof(TernarySearch))]
+        public async Task<IActionResult> TernarySearch([FromBody] string numbers, [FromQuery] int item)
+        {
+            var array = await _conversionService.GetArrayNumbersFromString(numbers);
+            array = array.OrderBy(number => number).ToArray();
+
+            _stopwatch.Start();
+            var result = await _searchService.TernarySearch(array, item);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SearchResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                ElapsedTime = elapsedTime,
+                SearchedVariable = item,
+                LastMatchingResult = result == null ? "Item is missing" : result.ToString(),
+                SearchArray = await _conversionService.GetStringFromArrayNumbers(array)
             });
         }
     }
