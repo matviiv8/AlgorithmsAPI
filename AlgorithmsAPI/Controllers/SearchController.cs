@@ -104,5 +104,66 @@ namespace AlgorithmsAPI.Controllers
                 SearchArray = await _conversionService.GetStringFromArrayNumbers(array)
             });
         }
+
+        [HttpPost("fibonacci", Name = nameof(FibonacciSearch))]
+        public async Task<IActionResult> FibonacciSearch([FromBody] string numbers, [FromQuery] int item)
+        {
+            var array = await _conversionService.GetArrayNumbersFromString(numbers);
+
+            _stopwatch.Start();
+            var result = await _searchService.FibonacciSearch(array, item);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SearchResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                ElapsedTime = elapsedTime,
+                SearchedVariable = item,
+                LastMatchingResult = result == null ? "Item is missing" : result.ToString(),
+                SearchArray = await _conversionService.GetStringFromArrayNumbers(array)
+            });
+        }
+
+        [HttpPost("sentinel", Name = nameof(SentinelSearch))]
+        public async Task<IActionResult> SentinelSearch([FromBody] string numbers, [FromQuery] int item)
+        {
+            var array = await _conversionService.GetArrayNumbersFromString(numbers);
+
+            _stopwatch.Start();
+            var result = await _searchService.SentinelSearch(array, item);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SearchResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                ElapsedTime = elapsedTime,
+                SearchedVariable = item,
+                LastMatchingResult = result == null ? "Item is missing" : result.ToString(),
+                SearchArray = await _conversionService.GetStringFromArrayNumbers(array)
+            });
+        }
+
+        [HttpPost("jump", Name = nameof(JumpSearch))]
+        public async Task<IActionResult> JumpSearch([FromBody] string numbers, [FromQuery] int item)
+        {
+            var array = await _conversionService.GetArrayNumbersFromString(numbers);
+            array = array.OrderBy(number => number).ToArray();
+
+            _stopwatch.Start();
+            var result = await _searchService.JumpSearch(array, item);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SearchResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                ElapsedTime = elapsedTime,
+                SearchedVariable = item,
+                LastMatchingResult = result == null ? "Item is missing" : result.ToString(),
+                SearchArray = await _conversionService.GetStringFromArrayNumbers(array)
+            });
+        }
     }
 }
