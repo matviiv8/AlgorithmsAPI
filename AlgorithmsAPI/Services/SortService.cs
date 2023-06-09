@@ -79,5 +79,83 @@ namespace AlgorithmsAPI.Services
             }
             return array;
         }
+
+        public async Task<int[]> InsertionSort(int[] array)
+        {
+            for(int i = 0; i < array.Length; i++)
+            {
+                var key = array[i];
+                var j = i - 1;
+
+                for(; j >= 0 && array[j] > key; j--)
+                {
+                    array[j + 1] = array[j];
+                }
+                array[j + 1] = key;
+            }
+
+            return array;
+        }
+
+        public async Task<int[]> CycleSort(int[] array)
+        {
+            for(int cycleStart=0;cycleStart < array.Length; cycleStart++)
+            {
+                var item = array[cycleStart];
+                var position = cycleStart;
+
+                for(int i = cycleStart + 1; i < array.Length; i++)
+                {
+                    if (array[i] < item)
+                    { 
+                        position++; 
+                    }
+                }
+
+                if (position == cycleStart)
+                {
+                    continue;
+                }
+                
+                while(item == array[position])
+                {
+                    position++;
+                }
+
+                if(position != cycleStart)
+                {
+                    var temp = item;
+                    item = array[position];
+                    array[position] = temp;
+                }
+
+                while(position != cycleStart)
+                {
+                    position = cycleStart;
+
+                    for(int i = cycleStart + 1; i < array.Length; i++)
+                    {
+                        if (array[i] < item)
+                        {
+                            position++;
+                        }
+                    }
+
+                    while (item == array[position])
+                    {
+                        position++;
+                    }
+
+                    if (position != array[position])
+                    {
+                        var temp = item;
+                        item = array[position];
+                        array[position] = temp;
+                    }
+                }
+            }
+
+            return array;
+        }
     }
 }

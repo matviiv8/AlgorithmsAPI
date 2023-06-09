@@ -77,5 +77,43 @@ namespace AlgorithmsAPI.Controllers
                 SortedArray = await _conversionService.GetStringFromArrayNumbers(sortedArray)
             });
         }
+
+        [HttpPost("insertion", Name = nameof(InsertionSort))]
+        public async Task<IActionResult> InsertionSort([FromBody] string numbers)
+        {
+            var initialArray = await _conversionService.GetArrayNumbersFromString(numbers);
+
+            _stopwatch.Start();
+            var sortedArray = await _sortService.InsertionSort(initialArray);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SortResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                InitialArray = numbers,
+                ElapsedTime = elapsedTime,
+                SortedArray = await _conversionService.GetStringFromArrayNumbers(sortedArray)
+            });
+        }
+
+        [HttpPost("cycle", Name = nameof(CycleSort))]
+        public async Task<IActionResult> CycleSort([FromBody] string numbers)
+        {
+            var initialArray = await _conversionService.GetArrayNumbersFromString(numbers);
+
+            _stopwatch.Start();
+            var sortedArray = await _sortService.CycleSort(initialArray);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SortResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                InitialArray = numbers,
+                ElapsedTime = elapsedTime,
+                SortedArray = await _conversionService.GetStringFromArrayNumbers(sortedArray)
+            });
+        }
     }
 }
