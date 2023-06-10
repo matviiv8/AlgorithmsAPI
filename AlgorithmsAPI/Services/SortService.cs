@@ -4,6 +4,13 @@ namespace AlgorithmsAPI.Services
 {
     public class SortService : ISortService
     {
+        private static void Swap(ref int a, ref int b)
+        {
+            var temp = a;
+            a = b;
+            b = temp;
+        }
+
         public async Task<int[]> BubbleSort(int[] array)
         {
             bool swapped = true;
@@ -16,9 +23,7 @@ namespace AlgorithmsAPI.Services
                 {
                     if (array[j - 1] > array[j])
                     {
-                        int temp = array[j - 1];
-                        array[j - 1] = array[j];
-                        array[j] = temp;
+                        Swap(ref array[j - 1], ref array[j]);
                         swapped = true;
                     }
                 }
@@ -40,17 +45,13 @@ namespace AlgorithmsAPI.Services
                     if (array[j] <= pivot)
                     {
                         i++;
-                        int firstTemp = array[i];
-                        array[i] = array[j];
-                        array[j] = firstTemp;
+                        Swap(ref array[i], ref array[j]);
                     }
                     j++;
                 }
 
                 var pivotIndex = i + 1;
-                var secondTemp = array[pivotIndex];
-                array[pivotIndex] = array[right];
-                array[right] = secondTemp;
+                Swap(ref array[pivotIndex], ref array[right]);
 
                 await QuickSort(array, left, pivotIndex - 1);
                 await QuickSort(array, pivotIndex + 1, right);
@@ -73,9 +74,7 @@ namespace AlgorithmsAPI.Services
                     }
                 }
 
-                var temp = array[minIndex];
-                array[minIndex] = array[i];
-                array[i] = temp;
+                Swap(ref array[minIndex], ref array[i]);
             }
             return array;
         }
@@ -124,9 +123,7 @@ namespace AlgorithmsAPI.Services
 
                 if(position != cycleStart)
                 {
-                    var temp = item;
-                    item = array[position];
-                    array[position] = temp;
+                    Swap(ref item, ref array[position]);
                 }
 
                 while(position != cycleStart)
@@ -148,14 +145,185 @@ namespace AlgorithmsAPI.Services
 
                     if (position != array[position])
                     {
-                        var temp = item;
-                        item = array[position];
-                        array[position] = temp;
+                        Swap(ref item, ref array[position]);
                     }
                 }
             }
 
             return array;
+        }
+
+        public async Task<int[]> CountingSort(int[] array)
+        {
+            var min = array.Min();
+            var max = array.Max();
+            var count = new int[max - min + 1];
+
+            for(int i = 0; i < array.Length; i++)
+            {
+                count[array[i]-min]++;
+            }
+
+            var index = 0;
+
+            for(int i = min; i <= max; i++)
+            {
+                while (count[i - min] > 0)
+                {
+                    array[index++] = i;
+                    count[i - min]--;
+                }
+            }
+
+            return array;
+        }
+
+        public async Task<int[]> CombSort(int[] array)
+        {
+            var gap = array.Length;
+            bool swapped = true;
+
+            while(gap != 1 || swapped == true)
+            {
+                gap = getNextGap(gap);
+                swapped = false;
+
+                for (int i = 0; i < array.Length - gap; i++)
+                {
+                    if (array[i] > array[i + gap])
+                    {
+                        Swap(ref array[i], ref array[i + gap]);
+
+                        swapped = true;
+                    }
+                }
+            }
+            return array;
+        }
+
+        private int getNextGap(int gap)
+        {
+            gap = (gap * 10) / 13;
+            return gap < 1 ? 1 : gap;
+        }
+
+        public async Task<int[]> ShellSort(int[] array)
+        {
+            for (int gap = array.Length / 2; gap > 0; gap /= 2)
+            {
+                for (int i = gap; i < array.Length; i++)
+                {
+                    var temp = array[i];
+
+                    int j;
+                    for (j = i; j >= gap && array[j - gap] > temp; j -= gap)
+                    {
+                        array[j] = array[j - gap];
+                    }
+
+                    array[j] = temp;
+                }
+            }
+            
+            return array;
+        }
+
+        public async Task<int[]> HeapSort(int[] array)
+        {
+            for (int i = array.Length / 2 - 1; i >= 0; i--)
+            {
+                Heapify(array, array.Length, i);
+            }
+
+            for (int i = array.Length - 1; i > 0; i--)
+            {
+                Swap(ref array[0], ref array[i]);
+
+                Heapify(array, i, 0);
+            }
+
+            return array;
+        }
+
+        private static void Heapify(int[] array, int n, int i)
+        {
+            var largest = i;
+            var left = 2 * i + 1;
+            var right = 2 * i + 2;
+
+            if (left < n && array[left] > array[largest])
+            {
+                largest = left;
+            }
+
+            if (right < n && array[right] > array[largest])
+            {
+                largest = right;
+            }
+
+            if (largest != i)
+            {
+                Swap(ref array[i], ref array[largest]);
+
+                Heapify(array, n, largest);
+            }
+        }
+
+        public async Task<int[]> MergeSort(int[] array)
+        {
+            var tempArray = new int[array.Length];
+            Sort(array, tempArray, 0, array.Length - 1);
+
+            return array;
+        }
+
+        private static void Sort(int[] array, int[] tempArray, int left, int right)
+        {
+            if (left < right)
+            {
+                var mid = (left + right) / 2;
+                Sort(array, tempArray, left, mid);
+                Sort(array, tempArray, mid + 1, right);
+                Merge(array, tempArray, left, mid, right);
+            }
+        }
+
+        private static void Merge(int[] array, int[] tempArray, int left, int mid, int right)
+        {
+            Array.Copy(array, left, tempArray, left, right - left + 1);
+
+            var leftIndex = left;
+            var rightIndex = mid + 1;
+            var currentIndex = left;
+
+            while (leftIndex <= mid && rightIndex <= right)
+            {
+                if (tempArray[leftIndex] <= tempArray[rightIndex])
+                {
+                    array[currentIndex] = tempArray[leftIndex];
+                    leftIndex++;
+                }
+                else
+                {
+                    array[currentIndex] = tempArray[rightIndex];
+                    rightIndex++;
+                }
+                currentIndex++;
+            }
+
+            while (leftIndex <= mid)
+            {
+                array[currentIndex] = tempArray[leftIndex];
+                leftIndex++;
+                currentIndex++;
+            }
+
+            while (rightIndex <= right)
+            {
+                array[currentIndex] = tempArray[rightIndex];
+                rightIndex++;
+                currentIndex++;
+            }
         }
     }
 }

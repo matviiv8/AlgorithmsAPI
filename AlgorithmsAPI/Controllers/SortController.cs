@@ -115,5 +115,101 @@ namespace AlgorithmsAPI.Controllers
                 SortedArray = await _conversionService.GetStringFromArrayNumbers(sortedArray)
             });
         }
+
+        [HttpPost("counting", Name = nameof(CountingSort))]
+        public async Task<IActionResult> CountingSort([FromBody] string numbers)
+        {
+            var initialArray = await _conversionService.GetArrayNumbersFromString(numbers);
+
+            _stopwatch.Start();
+            var sortedArray = await _sortService.CountingSort(initialArray);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SortResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                InitialArray = numbers,
+                ElapsedTime = elapsedTime,
+                SortedArray = await _conversionService.GetStringFromArrayNumbers(sortedArray)
+            });
+        }
+
+
+        [HttpPost("comb", Name = nameof(CombSort))]
+        public async Task<IActionResult> CombSort([FromBody] string numbers)
+        {
+            var initialArray = await _conversionService.GetArrayNumbersFromString(numbers);
+
+            _stopwatch.Start();
+            var sortedArray = await _sortService.CombSort(initialArray);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SortResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                InitialArray = numbers,
+                ElapsedTime = elapsedTime,
+                SortedArray = await _conversionService.GetStringFromArrayNumbers(sortedArray)
+            });
+        }
+
+        [HttpPost("shell", Name = nameof(ShellSort))]
+        public async Task<IActionResult> ShellSort([FromBody] string numbers)
+        {
+            var initialArray = await _conversionService.GetArrayNumbersFromString(numbers);
+
+            _stopwatch.Start();
+            var sortedArray = await _sortService.ShellSort(initialArray);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SortResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                InitialArray = numbers,
+                ElapsedTime = elapsedTime,
+                SortedArray = await _conversionService.GetStringFromArrayNumbers(sortedArray)
+            });
+        }
+
+        [HttpPost("heap", Name = nameof(HeapSort))]
+        public async Task<IActionResult> HeapSort([FromBody] string numbers)
+        {
+            var initialArray = await _conversionService.GetArrayNumbersFromString(numbers);
+
+            _stopwatch.Start();
+            var sortedArray = await _sortService.HeapSort(initialArray);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SortResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                InitialArray = numbers,
+                ElapsedTime = elapsedTime,
+                SortedArray = await _conversionService.GetStringFromArrayNumbers(sortedArray)
+            });
+        }
+
+        [HttpPost("merge", Name = nameof(MergeSort))]
+        public async Task<IActionResult> MergeSort([FromBody] string numbers)
+        {
+            var initialArray = await _conversionService.GetArrayNumbersFromString(numbers);
+
+            _stopwatch.Start();
+            var sortedArray = await _sortService.MergeSort(initialArray);
+            _stopwatch.Stop();
+            var elapsedTime = _stopwatch.Elapsed;
+
+            return Ok(new SortResult
+            {
+                NameOfAlgorithm = RouteData.Values["action"]?.ToString(),
+                InitialArray = numbers,
+                ElapsedTime = elapsedTime,
+                SortedArray = await _conversionService.GetStringFromArrayNumbers(sortedArray)
+            });
+        }
     }
 }

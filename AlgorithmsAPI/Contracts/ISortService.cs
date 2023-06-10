@@ -7,5 +7,10 @@
         Task<int[]> SelectionSort(int[] array);
         Task<int[]> InsertionSort(int[] array);
         Task<int[]> CycleSort(int[] array);
+        Task<int[]> CountingSort(int[] array);
+        Task<int[]> CombSort(int[] array);
+        Task<int[]> ShellSort(int[] array);
+        Task<int[]> HeapSort(int[] array);
+        Task<int[]> MergeSort(int[] array);
     }
 }
