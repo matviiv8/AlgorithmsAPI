@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ISortService, SortService>();
 builder.Services.AddScoped<ISearchService, SearchService>();
+builder.Services.AddScoped<IMathematicalService, MathematicalService>();
 builder.Services.AddScoped<IConversionService, ConversionService>();
 
 var app = builder.Build();
