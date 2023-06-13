@@ -1,16 +1,16 @@
-﻿using AlgorithmsAPI.Contracts;
+﻿using AlgorithmsAPI.Contracts.Helpers;
 using System.Runtime.CompilerServices;
 
-namespace AlgorithmsAPI.Services
+namespace AlgorithmsAPI.Services.Helpers
 {
     public class ConversionService : IConversionService
     {
-        public async Task<int[]> GetArrayNumbersFromString(string numbers)
+        public int[] GetArrayNumbersFromString(string numbers)
         {
             return numbers.Split(' ').Select(int.Parse).ToArray();
         }
 
-        public async Task<string> GetStringFromArrayNumbers(int[] array)
+        public string GetStringFromArrayNumbers(int[] array)
         {
             return string.Join(" ", array);
         }

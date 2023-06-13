@@ -1,4 +1,4 @@
-﻿namespace AlgorithmsAPI.Contracts
+﻿namespace AlgorithmsAPI.Contracts.Algorithms
 {
     public interface ISearchService
     {

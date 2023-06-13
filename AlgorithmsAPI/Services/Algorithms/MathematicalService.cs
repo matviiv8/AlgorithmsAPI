@@ -1,6 +1,6 @@
-﻿using AlgorithmsAPI.Contracts;
+﻿using AlgorithmsAPI.Contracts.Algorithms;
 
-namespace AlgorithmsAPI.Services
+namespace AlgorithmsAPI.Services.Algorithms
 {
     public class MathematicalService : IMathematicalService
     {

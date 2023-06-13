@@ -1,5 +1,7 @@
-using AlgorithmsAPI.Contracts;
-using AlgorithmsAPI.Services;
+using AlgorithmsAPI.Contracts.Algorithms;
+using AlgorithmsAPI.Contracts.Helpers;
+using AlgorithmsAPI.Services.Algorithms;
+using AlgorithmsAPI.Services.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
