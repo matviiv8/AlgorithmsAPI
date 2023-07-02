@@ -40,6 +40,7 @@ namespace AlgorithmsAPI.Services.Algorithms
                 if (array[i] == item)
                 {
                     result = i;
+                    break;
                 }
             }
 

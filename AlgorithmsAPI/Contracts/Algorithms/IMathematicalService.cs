@@ -7,5 +7,6 @@
         Task<int> IterativeGCD(int firstNumber, int secondNumber);
         Task<int> RecursiveGCD(int firstNumber, int secondNumber);
         Task<bool> IsPrime(int number);
+        Task<int[]> SieveOfEratosthenes(int threshold);
     }
 }
