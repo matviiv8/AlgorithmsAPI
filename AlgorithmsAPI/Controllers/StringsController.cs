@@ -8,6 +8,8 @@ namespace AlgorithmsAPI.Controllers
     /// <summary>
     /// Controller for string manipulation algorithms.
     /// </summary>
+    [ApiController]
+    [Route("strings")]
     public class StringsController : Controller
     {
         private readonly IStringsService _stringsService;

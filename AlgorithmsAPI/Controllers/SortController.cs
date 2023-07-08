@@ -39,7 +39,7 @@ namespace AlgorithmsAPI.Controllers
         /// 
         /// The space complexity of the algorithm is O(1) because it only requires a constant amount of additional space to perform the sorting.
         /// </remarks>
-        [HttpPost("buble")]
+        [HttpPost("bubble")]
         public async Task<IActionResult> BubbleSort([FromBody] string numbers)
         {
             try
