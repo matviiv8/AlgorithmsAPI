@@ -50,8 +50,6 @@ To use this API, make requests to the following URLs:
 
 Replace `{{baseUrl}}` with the base URL of your API.
 
-Please note that this is just an example, and you need to implement the actual endpoints and functionality in your API.
-
 ## Examples
 
 Here are some examples of how to use the API:
